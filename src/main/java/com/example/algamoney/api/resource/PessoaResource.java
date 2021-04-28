@@ -43,8 +43,9 @@ public class PessoaResource {
 	}
 
 	@GetMapping("/{codigo}")
-	public Pessoa buscarPeloCodigo(@PathVariable Long codigo) {
-		return this.pessoaRepository.findById(codigo).orElse(null);
+	public ResponseEntity<Pessoa> buscarPeloCodigo(@PathVariable Long codigo) {
+		return this.pessoaRepository.findById(codigo).map(pessoa -> ResponseEntity.ok(pessoa))
+				.orElse(ResponseEntity.notFound().build());
 	}
 
 }
