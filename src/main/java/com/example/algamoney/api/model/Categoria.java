@@ -8,10 +8,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.example.algamoney.api.validation.Group;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
 
+	@NotNull(groups = Group.Id.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;

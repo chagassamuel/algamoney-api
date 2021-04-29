@@ -1,5 +1,7 @@
 package com.example.algamoney.api.model;
 
+import java.beans.Transient;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +11,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.example.algamoney.api.validation.Group;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "pessoa")
 public class Pessoa {
 
+	@NotNull(groups = Group.Id.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
@@ -57,6 +63,12 @@ public class Pessoa {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	@Transient
+	@JsonIgnore
+	public Boolean isInativo() {
+		return !ativo;
 	}
 
 	@Override
