@@ -11,6 +11,7 @@ import com.example.algamoney.api.exception.PessoaInexistenteOuInativaException;
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.model.Pessoa;
 import com.example.algamoney.api.repository.LancamentoRepository;
+import com.example.algamoney.api.repository.filter.LancamentoFilter;
 
 @Service
 public class LancamentoService {
@@ -29,6 +30,10 @@ public class LancamentoService {
 
 	public List<Lancamento> buscarTodos() {
 		return lancamentoRepository.findAll();
+	}
+
+	public List<Lancamento> filtrar(LancamentoFilter lancamentoFilter) {
+		return lancamentoRepository.filtrar(lancamentoFilter);
 	}
 
 	public Lancamento salvar(Lancamento lancamento) {
