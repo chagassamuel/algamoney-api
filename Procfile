@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dspring-boot.run.profiles=prod $JAVA_OPTS -jar target/algamoney*.jar
