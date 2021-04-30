@@ -34,7 +34,7 @@ public class CategoriaResource {
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
-//	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")  // TODO descomentar
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public List<Categoria> listar() {
 		return categoriaRepository.findAll();
 	}
