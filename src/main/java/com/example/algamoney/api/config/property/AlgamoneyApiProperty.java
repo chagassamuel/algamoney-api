@@ -1,4 +1,4 @@
-package algamoney.seguranca;
+package com.example.algamoney.api.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
