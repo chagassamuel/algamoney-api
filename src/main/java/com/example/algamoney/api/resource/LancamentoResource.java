@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -84,8 +85,12 @@ public class LancamentoResource {
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @Valid @RequestBody Lancamento lancamento) {
-		Lancamento lancamentoSalvo = lancamentoService.atualizar(codigo, lancamento);
-		return ResponseEntity.ok(lancamentoSalvo);
+		try {
+			Lancamento lancamentoSalvo = lancamentoService.atualizar(codigo, lancamento);
+			return ResponseEntity.ok(lancamentoSalvo);
+		} catch (EmptyResultDataAccessException ex) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PutMapping("/{codigo}/ativo")

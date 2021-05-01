@@ -59,8 +59,26 @@ public class LancamentoService {
 
 	public Lancamento atualizar(Long codigo, Lancamento lancamento) {
 		Lancamento lancamentoSalvo = buscarPeloCodigo(codigo);
+
+		if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa())) {
+			validarPessoa(lancamento);
+		}
+
 		BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
 		return lancamentoRepository.save(lancamentoSalvo);
+	}
+
+	private void validarPessoa(Lancamento lancamento) {
+		Pessoa pessoa = null;
+
+		if (lancamento.getPessoa().getCodigo() != null) {
+			pessoa = pessoaService.buscarPessoaPeloCodigo(lancamento.getPessoa());
+		}
+
+		if (pessoa == null || pessoa.isInativo()) {
+			throw new PessoaInexistenteOuInativaException();
+		}
+
 	}
 
 }
